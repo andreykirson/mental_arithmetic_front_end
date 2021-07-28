@@ -54,6 +54,22 @@ class ChallengeComponent extends React.Component {
         this.setState({message: m});
     }
 
+    updateLastAttempts(userAlias: string) {
+        ChallengesApiClient.getAttempts(userAlias).then(res => {
+            if (res.ok) {
+                let attempts: Attempt[] = [];
+                res.json().then(data => {
+                    data.forEach(item => {
+                        attempts.push(item);
+                    });
+                    this.setState({
+                        lastAttempts: attempts
+                    });
+                })
+            }
+        })
+    }
+
     render() {
         return (
             <div>
@@ -81,6 +97,10 @@ class ChallengeComponent extends React.Component {
                     <input type="submit" value="Submit"/>
                 </form>
                 <h4>{this.state.message}</h4>
+                
+                {this.state.lastAttempts.length > 0 &&
+                <LastAttemptsComponent lastAttempts={this.state.lastAttempts}/>
+                }
 
                 <div className="display-column">
                     {/* we add this just before closing the main div */}
