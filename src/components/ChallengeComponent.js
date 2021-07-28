@@ -1,5 +1,6 @@
 import * as React from "react";
-import ApiClient from "../services/ApiClient";
+import ChallengesApiClient from "../services/ChallengesApiClient";
+import LeaderBoardComponent from './LeaderBoardComponent';
 
 class ChallengeComponent extends React.Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class ChallengeComponent extends React.Component {
     }
 
     componentDidMount(): void {
-        ApiClient.challenge().then(
+        ChallengesApiClient.challenge().then(
             res => {
                 if (res.ok) {
                     res.json().then(json => {
@@ -32,7 +33,7 @@ class ChallengeComponent extends React.Component {
 
     handleSubmitResult(event) {
         event.preventDefault();
-        ApiClient.sendGuess(this.state.user, this.state.a, this.state.b, this.state.guess).then(res => {
+        ChallengesApiClient.sendGuess(this.state.user, this.state.a, this.state.b, this.state.guess).then(res => {
             if (res.ok) {
                 res.json().then(json => {
                     if (json.correct) {
@@ -80,6 +81,11 @@ class ChallengeComponent extends React.Component {
                     <input type="submit" value="Submit"/>
                 </form>
                 <h4>{this.state.message}</h4>
+
+                <div className="display-column">
+                    {/* we add this just before closing the main div */}
+                    <LeaderBoardComponent />
+                </div>
             </div>
         );
     }
