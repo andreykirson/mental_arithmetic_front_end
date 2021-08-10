@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+.badge {
+  font-size: x-small;
+  border: 2px solid dodgerblue;
+  border-radius: 4px;
+  padding: 0.2em;
+  margin: 0.1em;
+}
